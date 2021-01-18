@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: S4 REST API
+server:
+  error:
+    include-stacktrace: never
