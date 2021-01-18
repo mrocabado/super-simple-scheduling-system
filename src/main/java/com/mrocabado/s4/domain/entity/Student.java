@@ -48,10 +48,4 @@ public class Student {
             throw new InvalidEntityException("Invalid lastName");
         }
     }
-
-
-
-    //FIXME use lombok
-    //FIXME add data validations (you can assume common sense validations)
-    //FIXME no exception handling at this level
 }
