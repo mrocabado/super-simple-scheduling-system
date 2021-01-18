@@ -2,12 +2,14 @@ package com.mrocabado.s4.db;
 
 import com.mrocabado.s4.domain.dependency.CourseRepository;
 import com.mrocabado.s4.domain.entity.Course;
-import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.stereotype.Component;
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import static com.mrocabado.s4.db.SimpleBeanPropertyFilter.applyFilter;
 
 @Component
 public class MapCourseRepository implements CourseRepository {
@@ -26,7 +28,7 @@ public class MapCourseRepository implements CourseRepository {
     @Override
     public List<Course> findAll(Map<String,String> filter) {
         return map.values().stream()
-                .filter( student -> this.applyFilter(student, filter))
+                .filter( student -> applyFilter(student, filter))
                 .collect(Collectors.toList());
     }
 
@@ -36,7 +38,8 @@ public class MapCourseRepository implements CourseRepository {
         if (course.getCode() == null || course.getCode().isEmpty()) {
             course.setCode(UUID.randomUUID().toString());
         }
-        return map.putIfAbsent(course.getCode(), course);
+        map.putIfAbsent(course.getCode(), course);
+        return course;
     }
 
     @Override
@@ -51,38 +54,12 @@ public class MapCourseRepository implements CourseRepository {
         map.remove(code);
     }
 
-    //Simple bean property filter
-    private boolean applyFilter(Course course, Map<String, String> filter) {
-        boolean isFiltered = true;
-
-        if (Objects.nonNull(filter) && !filter.isEmpty()) {
-            try {
-                Map<String, Object> properties = PropertyUtils.describe(course);
-
-                isFiltered = false;
-                for (Map.Entry<String, String> filterEntry : filter.entrySet()) {
-                    isFiltered = properties.entrySet().stream()
-                            .anyMatch( property ->
-                                    property.getKey().equals(filterEntry.getKey())
-                                            && property.getValue().equals(filterEntry.getValue())
-                            );
-                    if (isFiltered) {
-                        break;
-                    }
-                }
-            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e ) {
-                //do nothing
-            }
-        }
-
-        return isFiltered;
-    }
 
     static{
         map.putIfAbsent("c-1", new Course("c-1", "Class-1", "Class-1 description")
                                     .addStudentId("1")
                                     .addStudentId("2"));
-        map.putIfAbsent("c-2", new Course("2", "Class-2", "Class-2 description")
+        map.putIfAbsent("c-2", new Course("c-2", "Class-2", "Class-2 description")
                                     .addStudentId("2"));
     }
 }

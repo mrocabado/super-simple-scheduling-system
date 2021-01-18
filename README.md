@@ -28,7 +28,7 @@ The code at this layer receives input data executes Domain services and builds/r
 JSON was chosen as the data exchange format.
 
 ### DB implementation (com.mrocabado.s4.db.*)
-This an in-memory, map-based mock implementation of the repository interfaces defined in Domain/Core layer. 
+This is an in-memory, map-based mock implementation of the repository interfaces defined in Domain/Core layer. 
 This could be changed to use a real DB engine with no impact in Domain/Core. ([Dependency Inversion](https://en.wikipedia.org/wiki/Dependency_inversion_principle) Principle)
 
 ## Pending aspects
@@ -99,7 +99,7 @@ DELETE http://localhost:8080/classes/<code>
 ```
 Search (omit matrix parameters if you want to retrieve all courses)
 ```
-GET http://localhost:8080/classes/id=1;title=Class-1
+GET http://localhost:8080/classes/code=c-1;title=Class-1
 ```
 List of students
 ```
@@ -109,7 +109,7 @@ GET http://localhost:8080/classes/<code>/students
 ### Registration endpoint
 
 ```
-POST http://localhost:8080/registrations
+POST http://localhost:8080/registrations/
 
 {
 "studentId": "1",
