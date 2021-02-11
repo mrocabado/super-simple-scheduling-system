@@ -1,9 +1,6 @@
 package com.mrocabado.s4.db;
 
-import com.mrocabado.s4.domain.entity.Course;
-import com.mrocabado.s4.domain.entity.Student;
 import org.apache.commons.beanutils.PropertyUtils;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Objects;
