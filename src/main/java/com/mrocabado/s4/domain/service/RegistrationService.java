@@ -3,6 +3,8 @@ package com.mrocabado.s4.domain.service;
 import com.mrocabado.s4.domain.dependency.CourseRepository;
 import com.mrocabado.s4.domain.dependency.StudentRepository;
 import com.mrocabado.s4.domain.dto.Registration;
+import com.mrocabado.s4.domain.entity.Course;
+import com.mrocabado.s4.domain.entity.Student;
 import com.mrocabado.s4.domain.exception.InvalidEntityException;
 import org.springframework.stereotype.Component;
 
@@ -34,13 +36,20 @@ public class RegistrationService {
             throw new IllegalArgumentException("Student id not found in repository");
         }
 
-        this.courseRepository.findById(registration.getCourseCode())
-                                .get(0)
-                                .addStudentId(registration.getStudentId());
+        //FIXME: extracting this to a new method may ease transaction demarcation
+        //using domain-level annotation or sending the method to be executed by a transaction service.
+        //In real life, most likely we would create and save Registration entity
+        //Linking student, course plus details like the registrations date.
+        Course courseWithNewStudent = this.courseRepository.findById(registration.getCourseCode())
+                                                        .get(0)
+                                                        .addStudentId(registration.getStudentId());
 
+        courseRepository.edit(courseWithNewStudent);
 
-        this.studentRepository.findById(registration.getStudentId())
+        Student studentWithNewCourse =  this.studentRepository.findById(registration.getStudentId())
                 .get(0)
                 .addCourseCode(registration.getCourseCode());
+
+        studentRepository.edit(studentWithNewCourse);
     }
 }

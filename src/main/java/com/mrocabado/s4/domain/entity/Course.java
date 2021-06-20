@@ -39,7 +39,7 @@ public class Course {
 
     public Course addStudentId(String id) {
         studentIds.add(id);
-        return this;
+        return this;        //NOTE: Fluent APIs are nice!
     }
 
     private void checkValid() {

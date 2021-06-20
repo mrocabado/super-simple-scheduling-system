@@ -31,6 +31,7 @@ public class StudentService {
     }
 
     public Student create(Student student) {
+        //FIXME: We could have use lombok or simmilar to generate this null check
         if (Objects.isNull(student)) {
             throw new InvalidEntityException("Invalid student");
         }
@@ -38,6 +39,7 @@ public class StudentService {
             throw new IllegalArgumentException("Student id already in repository");
         }
 
+        //NOTE In a service class data access should be done over an Interface
         return this.studentRepository.create(student);
     }
 
