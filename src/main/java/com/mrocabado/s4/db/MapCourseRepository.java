@@ -3,12 +3,13 @@ package com.mrocabado.s4.db;
 import com.mrocabado.s4.domain.dependency.CourseRepository;
 import com.mrocabado.s4.domain.entity.Course;
 import org.springframework.stereotype.Component;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+
 import static com.mrocabado.s4.db.SimpleBeanPropertyFilter.applyFilter;
 
 @Component
@@ -36,7 +37,7 @@ public class MapCourseRepository implements CourseRepository {
     @Override
     public Course create(final Course course) {
         if (course.getCode() == null || course.getCode().isEmpty()) {
-            course.setCode(UUID.randomUUID().toString());
+            course.generateCode();
         }
         map.putIfAbsent(course.getCode(), course);
         return course;
@@ -44,9 +45,8 @@ public class MapCourseRepository implements CourseRepository {
 
     @Override
     public void edit(final Course course) {
-        Course existingCourse = map.get(course.getCode());
-        existingCourse.setTitle(course.getTitle());
-        existingCourse.setDescription(course.getDescription());
+        map.remove(course.getCode());
+        map.putIfAbsent(course.getCode(), course);
     }
 
     @Override
@@ -56,10 +56,10 @@ public class MapCourseRepository implements CourseRepository {
 
 
     static{
-        map.putIfAbsent("c-1", new Course("c-1", "Class-1", "Class-1 description")
+        map.putIfAbsent("c-692af00c-2964-44ab-af0a-370114d40896", new Course("c-692af00c-2964-44ab-af0a-370114d40896", "Class-1", "Class-1 description")
                                     .addStudentId("1")
                                     .addStudentId("2"));
-        map.putIfAbsent("c-2", new Course("c-2", "Class-2", "Class-2 description")
+        map.putIfAbsent("c-f9eed91c-6db2-4e64-bdee-7edd38bca003", new Course("c-f9eed91c-6db2-4e64-bdee-7edd38bca003", "Class-2", "Class-2 description")
                                     .addStudentId("2"));
     }
 }

@@ -1,8 +1,13 @@
 package com.mrocabado.s4.domain.exception;
 
-public class EntityNotFoundException extends RuntimeException{
+public class EntityNotFoundException extends RuntimeException {
 
-    public EntityNotFoundException(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1566956459754478209L;
+
+	public EntityNotFoundException(String message) {
         super(message);
     }
 }

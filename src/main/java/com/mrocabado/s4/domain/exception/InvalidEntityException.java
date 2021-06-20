@@ -1,8 +1,13 @@
 package com.mrocabado.s4.domain.exception;
 
-public class InvalidEntityException extends RuntimeException{
+public class InvalidEntityException extends RuntimeException {
 
-    public InvalidEntityException(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2796520195103330634L;
+
+	public InvalidEntityException(String message) {
         super(message);
     }
 }

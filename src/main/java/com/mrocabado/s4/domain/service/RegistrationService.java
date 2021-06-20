@@ -2,10 +2,7 @@ package com.mrocabado.s4.domain.service;
 
 import com.mrocabado.s4.domain.dependency.CourseRepository;
 import com.mrocabado.s4.domain.dependency.StudentRepository;
-import com.mrocabado.s4.domain.entity.Course;
-import com.mrocabado.s4.domain.entity.Registration;
-import com.mrocabado.s4.domain.entity.Student;
-import com.mrocabado.s4.domain.exception.EntityNotFoundException;
+import com.mrocabado.s4.domain.dto.Registration;
 import com.mrocabado.s4.domain.exception.InvalidEntityException;
 import org.springframework.stereotype.Component;
 

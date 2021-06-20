@@ -37,7 +37,6 @@ public class StudentService {
         if ( !this.studentRepository.findById(student.getId()).isEmpty() ) {
             throw new IllegalArgumentException("Student id already in repository");
         }
-        student.checkValid();
 
         return this.studentRepository.create(student);
     }
@@ -49,7 +48,6 @@ public class StudentService {
         if ( this.studentRepository.findById(student.getId()).isEmpty() ) {
             throw new IllegalArgumentException("Student id not found in repository");
         }
-        student.checkValid();
 
        this.studentRepository.edit(student);
     }

@@ -1,13 +1,15 @@
 package com.mrocabado.s4.domain.entity;
 
 import com.mrocabado.s4.domain.exception.InvalidEntityException;
-import lombok.Data;
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
+
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.UUID;
 
 //FIXME having setters in entity classes is poor encapsulation, But ok for this simple case
-@Data
+@Getter
 public class Course {
     private static final int MIN_TITLE_LENGTH = 2;
     private static final int MAX_TITLE_LENGTH = 10;
@@ -16,6 +18,8 @@ public class Course {
     private static final int MAX_DESCRIPTION_LENGTH = 25;
 
     private String
+            //FIXME: Yeah, I know Does no makes sense to make a surrogate/generated ID visible in the domain model.
+            //This should be a natural/domain key.
             code
             , title
             , description;
@@ -38,7 +42,7 @@ public class Course {
         return this;
     }
 
-    public void checkValid() {
+    private void checkValid() {
         if (StringUtils.isEmpty(title) || title.length() < MIN_TITLE_LENGTH ||  title.length() > MAX_TITLE_LENGTH) {
             throw new InvalidEntityException("Invalid title");
         }
@@ -46,5 +50,9 @@ public class Course {
         if (StringUtils.isEmpty(description) || description.length() < MIN_DESCRIPTION_LENGTH ||  description.length() > MAX_DESCRIPTION_LENGTH) {
             throw new InvalidEntityException("Invalid description");
         }
+    }
+
+    public void generateCode() {
+        this.code = "c-" + UUID.randomUUID();
     }
 }

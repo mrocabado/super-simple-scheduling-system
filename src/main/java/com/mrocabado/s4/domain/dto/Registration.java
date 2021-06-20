@@ -1,4 +1,4 @@
-package com.mrocabado.s4.domain.entity;
+package com.mrocabado.s4.domain.dto;
 
 import lombok.Data;
 

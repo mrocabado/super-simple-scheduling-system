@@ -1,15 +1,36 @@
-# S4 API Readme
+# S4 API
 
-## Technologies/frameworks
+# Requirements
 
-### Base
+## Summary
+Create a REST API to for a system that assigns students to classes.  API will be used by both a UI and programmatically by other systems.
+
+## Detailed Requirements
+
+### Models
+Student = { student id, last name, first name }
+Class = { code, title, description }
+Student can attend an unlimited number of classes.  Classes can have an unlimited number of students
+
+### Operations
+- Create/Edit/Delete Student
+- Create/Edit/Delete Class
+- Browse list of all Student
+- Browse list of all Classes
+- View all Students assigned to a Class
+- View all Classes assigned to a Student
+- Search Student/Classes by available fields/associations
+
+# Technologies/frameworks
+
+## Base
 - Java 8
 - Spring Boot 2
 - Spring Core 5
 - Spring MVC 5
 - Lombok
 
-### Util
+## Util
 - Apache Commons Beanutils
 - Apache Commons Lang 3
 
@@ -17,6 +38,10 @@
 
 Layers are segregated using packages, creating a separated jar artifact for every layer seemed overkill 
 for this exercise.
+
+Layering is **NOT** done by technology but by abstraction level:
+
+See: [The Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
 ### Domain/Core (com.mrocabado.s4.domain.*)
 Highest abstraction layer. Main players here are Domain Services, Entities and data access **interfaces**.

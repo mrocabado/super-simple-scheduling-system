@@ -37,7 +37,6 @@ public class CourseService {
         if ( !this.courseRepository.findById(course.getCode()).isEmpty() ) {
             throw new IllegalArgumentException("Class code already in repository");
         }
-        course.checkValid();
 
         return this.courseRepository.create(course);
     }
@@ -49,7 +48,6 @@ public class CourseService {
         if ( this.courseRepository.findById(course.getCode()).isEmpty() ) {
             throw new EntityNotFoundException("Class code not found in repository");
         }
-        course.checkValid();
 
         this.courseRepository.edit(course);
     }

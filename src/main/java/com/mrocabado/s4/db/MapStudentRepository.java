@@ -3,11 +3,7 @@ package com.mrocabado.s4.db;
 import com.mrocabado.s4.domain.dependency.StudentRepository;
 import com.mrocabado.s4.domain.entity.Student;
 import org.springframework.stereotype.Component;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import static com.mrocabado.s4.db.SimpleBeanPropertyFilter.applyFilter;
@@ -36,7 +32,8 @@ public class MapStudentRepository implements StudentRepository {
     @Override
     public Student create(Student student) {
         if (student.getId() == null || student.getId().isEmpty()) {
-            student.setId(UUID.randomUUID().toString());
+            //NOTE: Generating the internal/surrogate ID here instead of using the from the DB may ease DB engine migration
+            student.generateId();
         }
 
         map.putIfAbsent(student.getId(), student);
@@ -45,9 +42,8 @@ public class MapStudentRepository implements StudentRepository {
 
     @Override
     public void edit(final Student student) {
-        Student existingStudent = map.get(student.getId());
-        existingStudent.setLastName(student.getLastName());
-        existingStudent.setFirstName(student.getFirstName());
+        map.remove(student.getId());
+        map.putIfAbsent(student.getId(), student);
     }
 
     @Override
@@ -72,9 +68,9 @@ public class MapStudentRepository implements StudentRepository {
 
 
     static{
-        map.putIfAbsent("1", new Student("1", "John", "Doe")
+        map.putIfAbsent("284239e8-8c1c-4d3d-a046-90df74b1fac3", new Student("284239e8-8c1c-4d3d-a046-90df74b1fac3", "John", "Doe")
                                 .addCourseCode("c-1"));
-        map.putIfAbsent("2", new Student("2", "Mary", "Poppins")
+        map.putIfAbsent("a326064f-d224-4578-a58e-83a80b1cc8de", new Student("a326064f-d224-4578-a58e-83a80b1cc8de", "Mary", "Poppins")
                                 .addCourseCode("c-1")
                                 .addCourseCode("c-2"));
     }

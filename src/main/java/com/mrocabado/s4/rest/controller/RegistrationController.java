@@ -1,6 +1,6 @@
 package com.mrocabado.s4.rest.controller;
 
-import com.mrocabado.s4.domain.entity.Registration;
+import com.mrocabado.s4.domain.dto.Registration;
 import com.mrocabado.s4.domain.service.RegistrationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

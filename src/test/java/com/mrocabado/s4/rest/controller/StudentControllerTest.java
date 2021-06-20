@@ -21,10 +21,10 @@ public class StudentControllerTest {
     @Test
     public void whenIdIsFoundShouldReturnStudent() throws Exception {
         //https://spring.io/guides/gs/testing-web/
-        mockMvc.perform(get("/students/{filter}", "id=1"))
+        mockMvc.perform(get("/students/{filter}", "firstName=Mary"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$..id").value("1"))
+                .andExpect(jsonPath("$..id").exists())
                 .andExpect(jsonPath("$..firstName").exists());
     }
 }
