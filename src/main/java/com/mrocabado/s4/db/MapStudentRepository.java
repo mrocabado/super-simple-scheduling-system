@@ -8,6 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import static com.mrocabado.s4.db.SimpleBeanPropertyFilter.applyFilter;
 
+//NOTE: In a DB based implementation entity-to-dto may be required for create/edit
+//and dto-to-entity depending on the query results
 @Component
 public class MapStudentRepository implements StudentRepository {
     private final static Map<String, Student> map = new ConcurrentHashMap<>();

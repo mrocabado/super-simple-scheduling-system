@@ -141,3 +141,32 @@ POST http://localhost:8080/registrations/
 "courseCode": "c-2"
 }
 ```
+
+## Docker
+
+Create image and run a container
+```
+docker build --tag=s4-image .
+docker run -p5000:5000 s4-image
+```
+
+Inspect image and remove container
+
+```
+docker ps -a
+docker stop <container-name>
+docker rm <container-name>
+docker image rm s4-image
+```
+
+
+Stop all running containers: ```docker stop $(docker ps -a -q)```
+Delete all stopped containers: ```docker rm $(docker ps -a -q)```
+
+
+### References
+- [Dockerizing a Spring Boot Application](https://www.baeldung.com/dockerizing-spring-boot-application)
+- [Spring Boot with Docker](https://spring.io/guides/gs/spring-boot-docker/)
+
+## Quarkus
+
