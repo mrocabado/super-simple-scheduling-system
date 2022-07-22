@@ -2,10 +2,7 @@ package com.mrocabado.s4.domain.service;
 
 import com.mrocabado.s4.domain.dependency.CourseRepository;
 import com.mrocabado.s4.domain.dependency.StudentRepository;
-import com.mrocabado.s4.domain.dto.Registration;
-import com.mrocabado.s4.domain.entity.Course;
-import com.mrocabado.s4.domain.entity.Student;
-import com.mrocabado.s4.domain.exception.InvalidEntityException;
+import com.mrocabado.s4.domain.entity.Registration;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -17,39 +14,20 @@ public class RegistrationService {
     private final StudentRepository studentRepository;
 
     public RegistrationService(CourseRepository courseRepository, StudentRepository studentRepository) {
-        Objects.requireNonNull(courseRepository);
-        Objects.requireNonNull(studentRepository);
-        this.courseRepository = courseRepository;
-        this.studentRepository = studentRepository;
+        this.courseRepository = Objects.requireNonNull(courseRepository);
+        this.studentRepository = Objects.requireNonNull(studentRepository);
     }
 
-    public void create(Registration registration) {
-        if (Objects.isNull(registration)) {
-            throw new InvalidEntityException("Invalid registration");
+    public void apply(Registration registration) {
+
+        if ( !registration.exists() ) {
+            registration.apply();
+            update(registration);       //FIXME: This must run in a transaction
         }
+    }
 
-        if ( this.courseRepository.findById(registration.getCourseCode()).isEmpty() ) {
-            throw new IllegalArgumentException("Class code not found in repository");
-        }
-
-        if ( this.studentRepository.findById(registration.getStudentId()).isEmpty() ) {
-            throw new IllegalArgumentException("Student id not found in repository");
-        }
-
-        //FIXME: extracting this to a new method may ease transaction demarcation
-        //using domain-level annotation or sending the method to be executed by a transaction service.
-        //In real life, most likely we would create and save Registration entity
-        //Linking student, course plus details like the registrations date.
-        Course courseWithNewStudent = this.courseRepository.findById(registration.getCourseCode())
-                                                        .get(0)
-                                                        .addStudentId(registration.getStudentId());
-
-        courseRepository.edit(courseWithNewStudent);
-
-        Student studentWithNewCourse =  this.studentRepository.findById(registration.getStudentId())
-                .get(0)
-                .addCourseCode(registration.getCourseCode());
-
-        studentRepository.edit(studentWithNewCourse);
+    private void update(Registration registration) {
+        courseRepository.edit(registration.getCourse());
+        studentRepository.edit(registration.getStudent());
     }
 }

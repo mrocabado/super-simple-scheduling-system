@@ -20,10 +20,8 @@ public class CourseService {
     private final StudentRepository studentRepository;
 
     public CourseService(CourseRepository courseRepository, StudentRepository studentRepository) {
-        Objects.requireNonNull(courseRepository);
-        Objects.requireNonNull(studentRepository);
-        this.courseRepository = courseRepository;
-        this.studentRepository = studentRepository;
+        this.courseRepository = Objects.requireNonNull(courseRepository);
+        this.studentRepository = Objects.requireNonNull(studentRepository);
     }
 
     public List<Course> findAll(Map<String,String> filter) {

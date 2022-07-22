@@ -18,8 +18,6 @@ public class Course {
     private static final int MAX_DESCRIPTION_LENGTH = 25;
 
     private String
-            //FIXME: Yeah, I know Does no makes sense to make a surrogate/generated ID visible in the domain model.
-            //This should be a natural/domain key.
             code
             , title
             , description;

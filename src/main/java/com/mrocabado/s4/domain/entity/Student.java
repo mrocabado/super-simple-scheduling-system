@@ -26,6 +26,7 @@ public class Student {
     public Student() {
         //do nothing
     }
+
     //FIXME could have been replaced by a static factory methods
     public Student(String id, String firstName, String lastName) {
         this.id = id;
