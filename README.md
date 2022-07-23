@@ -146,8 +146,8 @@ POST http://localhost:8080/registrations/
 
 Create image and run a container
 ```
-docker build --tag=s4-image .
-docker run -p5000:5000 s4-image
+docker image build --tag=s4-image .
+docker run -p8080:8080 s4-image
 ```
 
 Inspect image and remove container
